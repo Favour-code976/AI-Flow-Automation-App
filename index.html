@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Smarter. Scale Faster. Automate What Slows You Down.</title>
+    <meta name="description" content="AI automation and workflow systems to help businesses streamline tasks, generate leads, and increase productivity. Book a discovery call today.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2c4465;
+            --secondary: #203d58;
+            --accent: #38726f;
+            --neutral: #a8c0d1;
+            --text: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral);
+            color: var(--text);
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.05) 0%, rgba(56, 178, 172, 0.05) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(49, 130, 206, 0.3);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .counter {
+            font-weight: 800;
+            color: var(--secondary);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+            height: 6px;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-xl font-bold text-gray-900">
+                        <span class="text-blue-600">AI</span>Flow
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+                    <a href="results.html" class="text-gray-700 hover:text-blue-600 transition-colors">Results</a>
+                    <a href="services.html" class="text-gray-700 hover:text-blue-600 transition-colors">Pricing</a>
+                    <a id="admin-link" href="/admin.html" class="text-gray-700 hover:text-blue-600 hidden">
+                        Admin Dashboard
+                    </a>
+                    <a href="contact.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Book Discovery Call
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <!-- NEW: Auth-related links -->
+  <a id="admin-link" href="admin.html"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Admin
+  </a>
+
+  <a id="login-link" href="login.html"
+     class="text-gray-700 hover:text-blue-600">
+    Login
+  </a>
+
+  <a id="logout-link" href="#"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Logout
+  </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-24 pb-16 relative overflow-hidden">
+        <div id="particle-container" class="particle-bg"></div>
+        <div class="content-overlay max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span id="typed-headline" class="text-gray-900"></span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        I help businesses streamline tasks, generate leads & increase productivity using AI automation, workflow systems & expert connection pathways.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="contact.html" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center justify-center">
+                            Book Discovery Call
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
+                        <button id="assessment-btn" class="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-50 transition-colors">
+                            Take Assessment
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="resources/hero-automation.png" alt="AI Automation Dashboard" class="w-full h-auto rounded-2xl shadow-2xl floating">
+                    <div class="absolute -top-4 -right-4 bg-white rounded-lg p-4 shadow-lg floating" style="animation-delay: -2s;">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-sm font-medium">Automations Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section id="calculator" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Calculate Your Potential Savings</h2>
+                <p class="text-gray-600 text-lg">See how much time and money you could save with AI automation</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-2xl p-8 reveal">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hours spent on repetitive tasks weekly</label>
+                            <input type="range" id="hours-slider" min="5" max="100" value="20" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-500 mt-1">
+                                <span>5 hrs</span>
+                                <span id="hours-value" class="font-semibold text-blue-600">20 hrs</span>
+                                <span>100+ hrs</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Team size</label>
+                            <select id="team-size" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="1">Just me</option>
+                                <option value="3" selected>Small team (2-5)</option>
+                                <option value="8">Medium team (6-10)</option>
+                                <option value="15">Large team (11-20)</option>
+                                <option value="25">Enterprise (20+)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Average hourly rate ($)</label>
+                            <input type="number" id="hourly-rate" value="50" min="15" max="500" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg">
+                        <h3 class="text-lg font-semibold mb-4">Your Potential Savings</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Monthly Hours Saved</span>
+                                <span id="monthly-hours" class="counter text-2xl font-bold">24</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Monthly Cost Savings</span>
+                                <span id="monthly-savings" class="counter text-2xl font-bold text-green-600">$1,200</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Annual Savings</span>
+                                <span id="annual-savings" class="counter text-2xl font-bold text-green-600">$14,400</span>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <div class="bg-gray-200 rounded-full h-3 mb-2">
+                                <div id="savings-bar" class="progress-bar w-1/4 h-3 rounded-full"></div>
+                            </div>
+                            <p class="text-sm text-gray-500">Based on 80% automation efficiency</p>
+                        </div>
+                        <a href="contact.html" class="btn-primary text-white px-6 py-3 rounded-lg font-semibold w-full mt-6 block text-center">
+                            Get Your Custom Automation Plan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">What I Do</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Comprehensive AI automation and business connection services designed to scale your operations</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-8 card-hover reveal">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold">AI + System Automation</h3>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            ChatGPT automations & integrations
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Lead capture & follow-up systems
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Social content & marketing automation
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            CRM & client workflow setup
+                        </li>
+                    </ul>
+                    <a href="services.html" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                        Learn More 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 card-hover reveal">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold">Business Connections</h3>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Connect founders to talent, coaches & advisors
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Strategic partnerships & referrals
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Deal facilitation & commission-based partnerships
+                        </li>
+                    </ul>
+                    <a href="services.html" class="text-teal-600 font-semibold hover:text-teal-700 inline-flex items-center">
+                        Learn More 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Results You Can Expect</h2>
+                <p class="text-gray-600 text-lg">Real outcomes from businesses like yours</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div class="text-center reveal">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">
+                        <span class="counter" data-target="25">0</span>+
+                    </div>
+                    <p class="text-gray-600">Hours Saved Monthly</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="text-4xl font-bold text-green-600 mb-2">
+                        <span class="counter" data-target="300">0</span>%
+                    </div>
+                    <p class="text-gray-600">Lead Generation Increase</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="text-4xl font-bold text-teal-600 mb-2">
+                        <span class="counter" data-target="85">0</span>%
+                    </div>
+                    <p class="text-gray-600">Process Efficiency Gain</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">
+                        <span class="counter" data-target="50">0</span>+
+                    </div>
+                    <p class="text-gray-600">Businesses Transformed</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-2xl p-6 text-center reveal">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">10-30+ hrs saved monthly</h3>
+                    <p class="text-gray-600">Eliminate repetitive tasks and free up your team for high-value work</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 text-center reveal">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">More leads, less manual labour</h3>
+                    <p class="text-gray-600">Automated lead generation and nurturing systems that work 24/7</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-6 text-center reveal">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Faster growth processes</h3>
+                    <p class="text-gray-600">Streamlined workflows that scale with your business growth</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <a href="results.html" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
+                    View Detailed Case Studies
+                    <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who I Work With Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Who I Work With</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Small–medium businesses, founders, creatives, consultants & growth-driven brands ready to unlock efficiency.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 text-center card-hover reveal">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Small-Medium Businesses</h3>
+                    <p class="text-gray-600 text-sm">Ready to scale operations without adding overhead</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center card-hover reveal">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Founders & Entrepreneurs</h3>
+                    <p class="text-gray-600 text-sm">Looking to focus on growth, not repetitive tasks</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center card-hover reveal">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Creatives & Consultants</h3>
+                    <p class="text-gray-600 text-sm">Need to streamline client work and business operations</p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 text-center card-hover reveal">
+                    <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Growth-Driven Brands</h3>
+                    <p class="text-gray-600 text-sm">Ready to unlock efficiency and scale faster</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work With Me Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Work With Me</h2>
+                <p class="text-gray-600 text-lg">Choose the engagement model that fits your needs</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 card-hover reveal">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold mb-2">1:1 AI Automation Setup</h3>
+                        <p class="text-gray-600 text-sm mb-4">Personalized automation implementation</p>
+                        <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-700">Book Now →</a>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-6 card-hover reveal">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold mb-2">Monthly Support Retainer</h3>
+                        <p class="text-gray-600 text-sm mb-4">Ongoing automation management</p>
+                        <a href="contact.html" class="text-teal-600 font-semibold hover:text-teal-700">Learn More →</a>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 card-hover reveal">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold mb-2">Expert / Talent Matching</h3>
+                        <p class="text-gray-600 text-sm mb-4">Connect with the right people</p>
+                        <a href="contact.html" class="text-purple-600 font-semibold hover:text-purple-700">Get Matched →</a>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 card-hover reveal">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold mb-2">Deal-Based Partnerships</h3>
+                        <p class="text-gray-600 text-sm mb-4">Commission-based collaborations</p>
+                        <a href="contact.html" class="text-green-600 font-semibold hover:text-green-700">Partner →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal">
+                <a href="contact.html" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center">
+                    Book Your Discovery Call
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Modal -->
+    <div id="assessment-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative">
+                <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                
+                <div id="quiz-container">
+                    <div id="quiz-progress" class="mb-6">
+                        <div class="bg-gray-200 rounded-full h-2">
+                            <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 25%"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Question <span id="current-question">1</span> of 4</p>
+                    </div>
+                    
+                    <div id="question-1" class="quiz-question">
+                        <h3 class="text-xl font-semibold mb-4">What's your biggest automation challenge?</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="challenge" value="time" class="mr-3">
+                                <span>Spending too much time on repetitive tasks</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="challenge" value="leads" class="mr-3">
+                                <span>Manual lead generation and follow-up</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="challenge" value="systems" class="mr-3">
+                                <span>Disconnected systems and workflows</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="challenge" value="growth" class="mr-3">
+                                <span>Can't scale due to operational bottlenecks</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="question-2" class="quiz-question hidden">
+                        <h3 class="text-xl font-semibold mb-4">How many hours does your team spend on repetitive tasks weekly?</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="hours" value="low" class="mr-3">
+                                <span>Less than 10 hours</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="hours" value="medium" class="mr-3">
+                                <span>10-30 hours</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="hours" value="high" class="mr-3">
+                                <span>30-50 hours</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="hours" value="extreme" class="mr-3">
+                                <span>More than 50 hours</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="question-3" class="quiz-question hidden">
+                        <h3 class="text-xl font-semibold mb-4">What's your current tech stack?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="crm" class="mr-3">
+                                <span class="text-sm">CRM</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="email" class="mr-3">
+                                <span class="text-sm">Email Marketing</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="social" class="mr-3">
+                                <span class="text-sm">Social Media Tools</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="analytics" class="mr-3">
+                                <span class="text-sm">Analytics</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="project" class="mr-3">
+                                <span class="text-sm">Project Management</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="tools" value="none" class="mr-3">
+                                <span class="text-sm">None / Spreadsheets</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="question-4" class="quiz-question hidden">
+                        <h3 class="text-xl font-semibold mb-4">What's your timeline for implementation?</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="timeline" value="immediate" class="mr-3">
+                                <span>ASAP - I'm losing money daily</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="timeline" value="month" class="mr-3">
+                                <span>Within the next month</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="timeline" value="quarter" class="mr-3">
+                                <span>This quarter</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="timeline" value="exploring" class="mr-3">
+                                <span>Just exploring options</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-results" class="hidden">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4">Perfect! Here's Your Custom Recommendation</h3>
+                            <div id="recommendation-content" class="bg-gray-50 rounded-xl p-6 mb-6">
+                                <!-- Dynamic content will be inserted here -->
+                            </div>
+                            <p class="text-gray-600 mb-6">Ready to implement these solutions in your business?</p>
+                            <a href="contact.html" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center">
+                                Book Your Strategy Call
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between mt-6">
+                        <button id="prev-btn" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 hidden">Previous</button>
+                        <button id="next-btn" class="btn-primary text-white px-6 py-2 rounded-lg ml-auto">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4">
+                    <span class="text-blue-400">AI</span>Flow
+                </div>
+                <p class="text-gray-400 mb-6">Work Smarter. Scale Faster. Automate What Slows You Down.</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="services.html" class="text-gray-400 hover:text-white">Services</a>
+                    <a href="results.html" class="text-gray-400 hover:text-white">Results</a>
+                    <a href="contact.html" class="text-gray-400 hover:text-white">Contact</a>
+                </div>
+                <p class="text-gray-500 text-sm">© 2024 AIFlow Automation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Firebase Auth setup -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js';
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+  } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "YOUR_KEY_HERE",
+    authDomain: "YOUR_DOMAIN_HERE",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET_HERE",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+</script>
+
+<!-- My main site logic -->
+<script src="main.js"></script>
+</body>
+</html>
