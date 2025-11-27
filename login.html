@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Flow - Login</title>
+  <link rel="stylesheet" href="styles.css" /> <!-- or your CSS/Tailwind file -->
+</head>
+<body class="bg-gray-50">
+  <!-- you can reuse your nav here if you like -->
+
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6">
+      <h1 class="text-2xl font-bold text-gray-900 text-center">
+        Sign in to AI Flow
+      </h1>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="email">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            class="mt-1 block w-full border rounded-md px-3 py-2 text-sm"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="password">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            class="mt-1 block w-full border rounded-md px-3 py-2 text-sm"
+          />
+        </div>
+
+        <p id="login-error" class="text-sm text-red-500 hidden">
+          Invalid email or password.
+        </p>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white font-medium py-2 rounded-md"
+        >
+          Log in
+        </button>
+      </form>
+
+      <p class="text-xs text-gray-500 text-center">
+        Admin Login Access:<br />
+        <strong>contact@favconnected.com</strong> / <strong>@Admin4510</strong>
+      </p>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
