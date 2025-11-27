@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Booking Management</title>
+    <meta name="description" content="Manage AI automation discovery call bookings and client information.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #3182ce;
+            --accent: #38b2ac;
+            --neutral: #f7fafc;
+            --text: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral);
+            color: var(--text);
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .sidebar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-confirmed {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(247,250,252,0.9) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .chart-container {
+            height: 300px;
+        }
+        
+        .sidebar-nav a {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+        
+        .booking-row {
+            transition: all 0.3s ease;
+        }
+        
+        .booking-row:hover {
+            background: #f8fafc;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar fixed left-0 top-0 w-70 p-6 text-white">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold mb-2">AI Flow Admin</h1>
+            <p class="text-blue-200 text-sm">Booking Management System</p>
+        </div>
+        
+        <nav class="sidebar-nav space-y-2">
+            <a href="#dashboard" class="active flex items-center p-3 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"></path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="#bookings" class="flex items-center p-3 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h6m-6 0l-1 9a2 2 0 002 2h6a2 2 0 002-2l-1-9m-6 0V7a2 2 0 012-2h2a2 2 0 012 2v1"></path>
+                </svg>
+                Bookings
+            </a>
+            <a href="#analytics" class="flex items-center p-3 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                Analytics
+            </a>
+            <a href="#clients" class="flex items-center p-3 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                Clients
+            </a>
+            <a href="#settings" class="flex items-center p-3 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Settings
+            </a>
+        </nav>
+        
+        <div class="mt-auto">
+            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                <h3 class="font-semibold mb-2">Quick Stats</h3>
+                <div class="space-y-1 text-sm">
+                    <div class="flex justify-between">
+                        <span>Today's Bookings:</span>
+                        <span class="font-semibold" id="today-bookings">3</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>This Week:</span>
+                        <span class="font-semibold" id="week-bookings">12</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>This Month:</span>
+                        <span class="font-semibold" id="month-bookings">48</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 p-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                    <p class="text-gray-600">Manage your AI automation discovery calls</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">Last booking</p>
+                        <p class="text-sm font-semibold">2 hours ago</p>
+                    </div>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Export Data
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-6">
+            <!-- Metrics Cards -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="metric-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Total Bookings</p>
+                            <p class="text-3xl font-bold text-blue-600">127</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h6m-6 0l-1 9a2 2 0 002 2h6a2 2 0 002-2l-1-9m-6 0V7a2 2 0 012-2h2a2 2 0 012 2v1"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm">↗ +12% from last month</span>
+                    </div>
+                </div>
+                
+                <div class="metric-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Confirmed</p>
+                            <p class="text-3xl font-bold text-green-600">89</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm">70% conversion rate</span>
+                    </div>
+                </div>
+                
+                <div class="metric-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Pending</p>
+                            <p class="text-3xl font-bold text-yellow-600">28</p>
+                        </div>
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-yellow-600 text-sm">Awaiting confirmation</span>
+                    </div>
+                </div>
+                
+                <div class="metric-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">Revenue Potential</p>
+                            <p class="text-3xl font-bold text-purple-600">$89K</p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-purple-600 text-sm">Based on confirmed bookings</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4">Booking Trends</h3>
+                    <div class="chart-container" id="booking-chart"></div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4">Challenge Distribution</h3>
+                    <div class="chart-container" id="challenge-chart"></div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings Table -->
+            <div class="bg-white rounded-xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-bold">Recent Bookings</h3>
+                    <div class="flex space-x-2">
+                        <input type="text" placeholder="Search bookings..." class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm">
+                            Filter
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Client</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Company</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Challenge</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Revenue</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-table">
+                            <!-- Bookings will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">Booking Details</h3>
+                    <button class="text-gray-400 hover:text-gray-600" onclick="closeModal()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="modal-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Configuration Script -->
+    <script>
+        // Email configuration for contact@favconnected.com
+        const EMAIL_CONFIG = {
+            adminEmail: 'contact@favconnected.com',
+            smtpServer: 'smtp.favconnected.com',
+            smtpPort: 587,
+            useTLS: true
+        };
+
+        // Sample booking data
+        const sampleBookings = [
+            {
+                id: 1,
+                date: '2024-12-06',
+                time: '10:00 AM',
+                fullName: 'Sarah Johnson',
+                email: 'sarah.johnson@techcorp.com',
+                phone: '+1-555-0123',
+                company: 'TechCorp Solutions',
+                challenge: 'time',
+                revenue: '50k-100k',
+                context: 'Looking to automate our client onboarding process and reduce manual data entry.',
+                status: 'confirmed',
+                bookingDate: '2024-12-05 14:30'
+            },
+            {
+                id: 2,
+                date: '2024-12-06',
+                time: '2:00 PM',
+                fullName: 'Michael Chen',
+                email: 'm.chen@digitalagency.com',
+                phone: '+1-555-0156',
+                company: 'Digital Edge Agency',
+                challenge: 'systems',
+                revenue: '25k-50k',
+                context: 'Need help integrating our CRM with project management tools.',
+                status: 'pending',
+                bookingDate: '2024-12-05 16:45'
+            },
+            {
+                id: 3,
+                date: '2024-12-07',
+                time: '11:00 AM',
+                fullName: 'Emily Rodriguez',
+                email: 'emily.r@consultingfirm.com',
+                phone: '+1-555-0189',
+                company: 'Strategic Consulting LLC',
+                challenge: 'growth',
+                revenue: '100k+',
+                context: 'Scaling challenges - need to automate lead generation and follow-up.',
+                status: 'confirmed',
+                bookingDate: '2024-12-05 09:15'
+            }
+        ];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            populateBookingsTable();
+            initializeCharts();
+            updateMetrics();
+        });
+
+        function populateBookingsTable() {
+            const tableBody = document.getElementById('bookings-table');
+            tableBody.innerHTML = '';
+
+            sampleBookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.className = 'booking-row border-b border-gray-100';
+                
+                const challengeLabels = {
+                    'time': 'Time Management',
+                    'leads': 'Lead Generation',
+                    'systems': 'System Integration',
+                    'growth': 'Scaling Issues',
+                    'other': 'Other'
+                };
+
+                const revenueLabels = {
+                    '0-10k': '$0 - $10K',
+                    '10k-25k': '$10K - $25K',
+                    '25k-50k': '$25K - $50K',
+                    '50k-100k': '$50K - $100K',
+                    '100k+': '$100K+'
+                };
+
+                row.innerHTML = `
+                    <td class="py-4 px-4">
+                        <div>
+                            <div class="font-semibold">${booking.date}</div>
+                            <div class="text-sm text-gray-500">${booking.time}</div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-4">
+                        <div>
+                            <div class="font-semibold">${booking.fullName}</div>
+                            <div class="text-sm text-gray-500">${booking.email}</div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-4">${booking.company}</td>
+                    <td class="py-4 px-4">
+                        <span class="text-sm">${challengeLabels[booking.challenge]}</span>
+                    </td>
+                    <td class="py-4 px-4">
+                        <span class="text-sm">${revenueLabels[booking.revenue]}</span>
+                    </td>
+                    <td class="py-4 px-4">
+                        <span class="status-badge status-${booking.status}">
+                            ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                        </span>
+                    </td>
+                    <td class="py-4 px-4">
+                        <button onclick="showBookingDetails(${booking.id})" class="text-blue-600 hover:text-blue-800 text-sm font-semibold">
+                            View Details
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showBookingDetails(bookingId) {
+            const booking = sampleBookings.find(b => b.id === bookingId);
+            if (!booking) return;
+
+            const modal = document.getElementById('booking-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            const challengeLabels = {
+                'time': 'Time Management',
+                'leads': 'Lead Generation',
+                'systems': 'System Integration',
+                'growth': 'Scaling Issues',
+                'other': 'Other'
+            };
+
+            const revenueLabels = {
+                '0-10k': '$0 - $10K',
+                '10k-25k': '$10K - $25K',
+                '25k-50k': '$25K - $50K',
+                '50k-100k': '$50K - $100K',
+                '100k+': '$100K+'
+            };
+
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Contact Information</h4>
+                            <div class="space-y-2 text-sm">
+                                <div><span class="text-gray-500">Name:</span> ${booking.fullName}</div>
+                                <div><span class="text-gray-500">Email:</span> ${booking.email}</div>
+                                <div><span class="text-gray-500">Phone:</span> ${booking.phone}</div>
+                                <div><span class="text-gray-500">Company:</span> ${booking.company}</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Booking Details</h4>
+                            <div class="space-y-2 text-sm">
+                                <div><span class="text-gray-500">Date:</span> ${booking.date}</div>
+                                <div><span class="text-gray-500">Time:</span> ${booking.time}</div>
+                                <div><span class="text-gray-500">Booked:</span> ${booking.bookingDate}</div>
+                                <div><span class="text-gray-500">Status:</span> 
+                                    <span class="status-badge status-${booking.status}">
+                                        ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">Business Information</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div><span class="text-gray-500">Main Challenge:</span> ${challengeLabels[booking.challenge]}</div>
+                            <div><span class="text-gray-500">Monthly Revenue:</span> ${revenueLabels[booking.revenue]}</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3">Additional Context</h4>
+                        <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">${booking.context}</p>
+                    </div>
+                    
+                    <div class="flex space-x-3 pt-4 border-t">
+                        <button onclick="confirmBooking(${booking.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm">
+                            Confirm Booking
+                        </button>
+                        <button onclick="rescheduleBooking(${booking.id})" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                            Reschedule
+                        </button>
+                        <button onclick="cancelBooking(${booking.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm">
+                            Cancel
+                        </button>
+                        <button onclick="sendEmail(${booking.id})" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 text-sm">
+                            Send Email
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('booking-modal').classList.remove('show');
+        }
+
+        // Booking actions
+        function confirmBooking(bookingId) {
+            const booking = sampleBookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = 'confirmed';
+                populateBookingsTable();
+                closeModal();
+                
+                // Send confirmation email
+                sendBookingEmail(booking, 'confirmed');
+                
+                alert('Booking confirmed and email sent to ' + booking.email);
+            }
+        }
+
+        function rescheduleBooking(bookingId) {
+            alert('Reschedule functionality - would open calendar to select new date/time');
+        }
+
+        function cancelBooking(bookingId) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                const booking = sampleBookings.find(b => b.id === bookingId);
+                if (booking) {
+                    booking.status = 'cancelled';
+                    populateBookingsTable();
+                    closeModal();
+                    
+                    // Send cancellation email
+                    sendBookingEmail(booking, 'cancelled');
+                    
+                    alert('Booking cancelled and notification sent');
+                }
+            }
+        }
+
+        function sendEmail(bookingId) {
+            const booking = sampleBookings.find(b => b.id === bookingId);
+            if (booking) {
+                sendBookingEmail(booking, 'reminder');
+                alert('Reminder email sent to ' + booking.email);
+            }
+        }
+
+        function sendBookingEmail(booking, type) {
+            // This would integrate with the email system
+            console.log(`Sending ${type} email to:`, booking.email);
+            console.log('Email config:', EMAIL_CONFIG);
+            
+            // Email content would be generated here
+            const emailContent = generateEmailContent(booking, type);
+            console.log('Email content:', emailContent);
+        }
+
+        function generateEmailContent(booking, type) {
+            const templates = {
+                confirmed: {
+                    subject: 'Your AI Automation Discovery Call is Confirmed',
+                    body: `Hi ${booking.fullName},
+
+Your discovery call is confirmed for ${booking.date} at ${booking.time}.
+
+We'll discuss your ${booking.challenge} challenges and explore automation opportunities.
+
+Meeting link: [CALENDAR_LINK]
+
+Best regards,
+AI Flow Team`
+                },
+                cancelled: {
+                    subject: 'Booking Cancellation - AI Automation Discovery Call',
+                    body: `Hi ${booking.fullName},
+
+Your discovery call scheduled for ${booking.date} at ${booking.time} has been cancelled.
+
+Please contact us at ${EMAIL_CONFIG.adminEmail} to reschedule.
+
+Best regards,
+AI Flow Team`
+                },
+                reminder: {
+                    subject: 'Reminder: AI Automation Discovery Call Tomorrow',
+                    body: `Hi ${booking.fullName},
+
+This is a reminder about your discovery call tomorrow at ${booking.time}.
+
+We're excited to discuss how automation can help with your ${booking.challenge} challenges.
+
+Meeting link: [CALENDAR_LINK]
+
+See you soon!
+AI Flow Team`
+                }
+            };
+            
+            return templates[type] || templates.confirmed;
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Booking trends chart
+            const bookingChart = echarts.init(document.getElementById('booking-chart'));
+            const bookingOption = {
+                tooltip: { trigger: 'axis' },
+                xAxis: {
+                    type: 'category',
+                    data: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+                },
+                yAxis: { type: 'value' },
+                series: [{
+                    data: [8, 12, 15, 13],
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: { color: '#3b82f6' },
+                    areaStyle: { color: 'rgba(59, 130, 246, 0.1)' }
+                }]
+            };
+            bookingChart.setOption(bookingOption);
+
+            // Challenge distribution chart
+            const challengeChart = echarts.init(document.getElementById('challenge-chart'));
+            const challengeOption = {
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'pie',
+                    radius: '70%',
+                    data: [
+                        { value: 35, name: 'Time Management', itemStyle: { color: '#3b82f6' } },
+                        { value: 28, name: 'Lead Generation', itemStyle: { color: '#10b981' } },
+                        { value: 22, name: 'System Integration', itemStyle: { color: '#f59e0b' } },
+                        { value: 15, name: 'Scaling Issues', itemStyle: { color: '#8b5cf6' } }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }]
+            };
+            challengeChart.setOption(challengeOption);
+        }
+
+        function updateMetrics() {
+            // Update sidebar stats
+            document.getElementById('today-bookings').textContent = '3';
+            document.getElementById('week-bookings').textContent = '12';
+            document.getElementById('month-bookings').textContent = '48';
+        }
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Update header title
+                const section = this.getAttribute('href').substring(1);
+                document.querySelector('header h1').textContent = section.charAt(0).toUpperCase() + section.slice(1);
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('booking-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+<!-- your existing big <script> ...dashboard logic... </script> is here -->
+
+    <!-- Firebase Auth + main.js (same as other pages) -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js';
+      import { 
+        getAuth, 
+        onAuthStateChanged, 
+        signInWithEmailAndPassword, 
+        signOut 
+      } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js';
+
+      const firebaseConfig = {
+        apiKey: "YOUR_KEY_HERE",
+        authDomain: "YOUR_DOMAIN_HERE",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_BUCKET",
+        messagingSenderId: "YOUR_MSG_ID",
+        appId: "YOUR_APP_ID"
+      };
+
+      const app  = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+    </script>
+
+    <script src="main.js"></script>
+</body>
+</html>
