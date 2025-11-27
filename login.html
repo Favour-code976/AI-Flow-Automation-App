@@ -57,8 +57,35 @@
       </p>
     </div>
   </div>
+<!-- Firebase Auth setup -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+  } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
 
-  <script src="main.js"></script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Make it available to main.js
+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+</script>
+
+<!-- my main JS file -->
+<script src="main.js"></script>
 </body>
 </html>
+
 
