@@ -1,6 +1,6 @@
 // Main JavaScript for AI Automation Landing Page
 
-const ADMIN_EMAIL = "contact@favconnected.com"; // your admin email
+const ADMIN_EMAIL = "favylily7@gmail"; // your admin email
 
 
 // Initialize when DOM is loaded
@@ -656,3 +656,4 @@ window.AIFlow = {
     animateCounter,
     createParticleBackground
 };
+
