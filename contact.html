@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Discovery Call - AI Automation Consultation</title>
+    <meta name="description" content="Ready to transform your business with AI automation? Book a free discovery call to discuss your needs and get a custom implementation plan.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #3182ce;
+            --accent: #38b2ac;
+            --neutral: #f7fafc;
+            --text: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral);
+            color: var(--text);
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(49, 130, 206, 0.3);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .calendar-day {
+            background: white;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calendar-day:hover {
+            background: #f3f4f6;
+        }
+        
+        .calendar-day.available {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+        
+        .calendar-day.available:hover {
+            background: #dbeafe;
+        }
+        
+        .calendar-day.selected {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .calendar-day.disabled {
+            background: #f9fafb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .time-slot {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .time-slot:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .time-slot.selected {
+            border-color: #3b82f6;
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 1rem;
+            position: relative;
+        }
+        
+        .progress-step.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .progress-step.completed {
+            background: #10b981;
+            color: white;
+        }
+        
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 2rem;
+            height: 2px;
+            background: #e5e7eb;
+            transform: translateY(-50%);
+        }
+        
+        .progress-step:last-child::after {
+            display: none;
+        }
+        
+        .progress-step.completed::after {
+            background: #10b981;
+        }
+        
+        .success-animation {
+            animation: successPulse 2s ease-in-out;
+        }
+        
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .meeting-prep {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-gray-900">
+                        <span class="text-blue-600">AI</span>Flow
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="services.html" class="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+                    <a href="results.html" class="text-gray-700 hover:text-blue-600 transition-colors">Results</a>
+                </div>
+            </div>
+        </div>
+    <!-- NEW: Auth-related links -->
+  <a id="admin-link" href="admin.html"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Admin
+  </a>
+
+  <a id="login-link" href="login.html"
+     class="text-gray-700 hover:text-blue-600">
+    Login
+  </a>
+
+  <a id="logout-link" href="#"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Logout
+  </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-blue-50 to-teal-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="reveal">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Book Your <span class="text-blue-600">Discovery Call</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Ready to transform your business with AI automation? Let's discuss your challenges and create a custom solution.
+                </p>
+                <div class="bg-white rounded-2xl p-6 inline-block shadow-lg">
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600">30</div>
+                            <div class="text-sm text-gray-500">Minutes</div>
+                        </div>
+                        <div class="text-gray-300">•</div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">Free</div>
+                            <div class="text-sm text-gray-500">No Cost</div>
+                        </div>
+                        <div class="text-gray-300">•</div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600">Custom</div>
+                            <div class="text-sm text-gray-500">Roadmap</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Progress Indicator -->
+            <div class="progress-indicator reveal">
+                <div class="progress-step active" id="step-1">1</div>
+                <div class="progress-step" id="step-2">2</div>
+                <div class="progress-step" id="step-3">3</div>
+                <div class="progress-step" id="step-4">4</div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8 reveal">
+                <!-- Step 1: Date Selection -->
+                <div class="form-step active" id="form-step-1">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold mb-4">Select Your Preferred Date</h2>
+                        <p class="text-gray-600">Choose a date that works best for your schedule</p>
+                    </div>
+                    
+                    <div class="max-w-md mx-auto">
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <button id="prev-month" class="p-2 hover:bg-gray-100 rounded-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </button>
+                                <h3 class="text-lg font-semibold" id="current-month">December 2024</h3>
+                                <button id="next-month" class="p-2 hover:bg-gray-100 rounded-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="calendar-grid" id="calendar-grid">
+                                <!-- Calendar days will be generated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button id="next-to-time" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Continue to Time Selection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Time Selection -->
+                <div class="form-step" id="form-step-2">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold mb-4">Choose Your Time</h2>
+                        <p class="text-gray-600">Select your preferred time slot for <span id="selected-date-display"></span></p>
+                    </div>
+                    
+                    <div class="max-w-md mx-auto">
+                        <div class="grid grid-cols-2 gap-4 mb-8" id="time-slots">
+                            <!-- Time slots will be generated by JavaScript -->
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button id="back-to-date" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                                Back to Date
+                            </button>
+                            <button id="next-to-details" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Continue to Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact Details -->
+                <div class="form-step" id="form-step-3">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold mb-4">Your Contact Details</h2>
+                        <p class="text-gray-600">Help me prepare for our call by sharing some details about your business</p>
+                    </div>
+                    
+                    <div class="max-w-md mx-auto space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input type="text" id="full-name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input type="email" id="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                            <input type="text" id="company" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">What's your biggest automation challenge? *</label>
+                            <select id="challenge" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select your main challenge</option>
+                                <option value="time">Spending too much time on repetitive tasks</option>
+                                <option value="leads">Manual lead generation and follow-up</option>
+                                <option value="systems">Disconnected systems and workflows</option>
+                                <option value="growth">Can't scale due to operational bottlenecks</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Current monthly revenue</label>
+                            <select id="revenue" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select revenue range</option>
+                                <option value="0-10k">$0 - $10K</option>
+                                <option value="10k-25k">$10K - $25K</option>
+                                <option value="25k-50k">$25K - $50K</option>
+                                <option value="50k-100k">$50K - $100K</option>
+                                <option value="100k+">$100K+</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional context (optional)</label>
+                            <textarea id="context" rows="4" placeholder="Tell me more about your current situation, goals, or specific pain points..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button id="back-to-time" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                                Back to Time
+                            </button>
+                            <button id="next-to-confirm" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Review Booking
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirmation -->
+                <div class="form-step" id="form-step-4">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold mb-4">Confirm Your Booking</h2>
+                        <p class="text-gray-600">Review your appointment details before confirming</p>
+                    </div>
+                    
+                    <div class="max-w-md mx-auto bg-gray-50 rounded-xl p-6 mb-8">
+                        <h3 class="font-bold mb-4">Appointment Summary</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Date:</span>
+                                <span id="confirm-date" class="font-semibold"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Time:</span>
+                                <span id="confirm-time" class="font-semibold"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Duration:</span>
+                                <span class="font-semibold">30 minutes</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Type:</span>
+                                <span class="font-semibold">Free Discovery Call</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t pt-4 mt-4">
+                            <h4 class="font-semibold mb-2">What to Expect:</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Discuss your current challenges</li>
+                                <li>• Identify automation opportunities</li>
+                                <li>• Get a custom implementation plan</li>
+                                <li>• Receive ROI projections</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button id="back-to-details" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            Back to Details
+                        </button>
+                        <button id="confirm-booking" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold">
+                            Confirm Booking
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Step -->
+                <div class="form-step" id="form-step-success">
+                    <div class="text-center success-animation">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-3xl font-bold mb-4 text-green-600">Booking Confirmed!</h2>
+                        <p class="text-xl text-gray-600 mb-8">
+                            Your discovery call is scheduled for <span id="final-datetime" class="font-semibold"></span>
+                        </p>
+                        
+                        <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                            <h3 class="font-bold mb-4">What's Next?</h3>
+                            <div class="space-y-3 text-left">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm mr-3">1</div>
+                                    <span>You'll receive a confirmation email with the meeting link</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm mr-3">2</div>
+                                    <span>A calendar invite will be sent to your email</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm mr-3">3</div>
+                                    <span>I'll review your information and prepare for our call</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm mr-3">4</div>
+                                    <span>We'll meet and discuss your automation opportunities</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="index.html" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center">
+                                Back to Home
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                </svg>
+                            </a>
+                            <a href="results.html" class="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors inline-flex items-center justify-center">
+                                View Case Studies
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meeting Prep Section -->
+    <section class="py-16 meeting-prep">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Prepare for Maximum Value</h2>
+                <p class="text-gray-600 text-lg">To make the most of our 30 minutes together, consider these questions:</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-6 reveal">
+                    <h3 class="text-xl font-bold mb-4">Current State</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            What repetitive tasks consume most of your time?
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Which systems or tools do you currently use?
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            What's your biggest operational bottleneck?
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 reveal">
+                    <h3 class="text-xl font-bold mb-4">Future Goals</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            What would you do with 20+ extra hours per week?
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Where do you see your business in 12 months?
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            What's your timeline for implementing changes?
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4">
+                    <span class="text-blue-400">AI</span>Flow
+                </div>
+                <p class="text-gray-400 mb-6">Work Smarter. Scale Faster. Automate What Slows You Down.</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="index.html" class="text-gray-400 hover:text-white">Home</a>
+                    <a href="services.html" class="text-gray-400 hover:text-white">Services</a>
+                    <a href="results.html" class="text-gray-400 hover:text-white">Results</a>
+                </div>
+                <p class="text-gray-500 text-sm">© 2024 AIFlow Automation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Booking form state
+        let bookingData = {
+            date: null,
+            time: null,
+            fullName: '',
+            email: '',
+            phone: '',
+            company: '',
+            challenge: '',
+            revenue: '',
+            context: ''
+        };
+
+        // Initialize booking system
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCalendar();
+            initializeFormNavigation();
+            initializeFormValidation();
+            initializeScrollEffects();
+        });
+
+        // Calendar functionality
+        function initializeCalendar() {
+            const currentDate = new Date();
+            let displayDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            
+            generateCalendar(displayDate);
+            
+            document.getElementById('prev-month').addEventListener('click', () => {
+                displayDate.setMonth(displayDate.getMonth() - 1);
+                generateCalendar(displayDate);
+            });
+            
+            document.getElementById('next-month').addEventListener('click', () => {
+                displayDate.setMonth(displayDate.getMonth() + 1);
+                generateCalendar(displayDate);
+            });
+        }
+
+        function generateCalendar(date) {
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            
+            document.getElementById('current-month').textContent = 
+                `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+            
+            const calendarGrid = document.getElementById('calendar-grid');
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day font-semibold text-gray-500 bg-gray-100';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            const today = new Date();
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day disabled';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dayElement = document.createElement('div');
+                const dayDate = new Date(date.getFullYear(), date.getMonth(), day);
+                
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Disable past dates and weekends for demo
+                if (dayDate < today || dayDate.getDay() === 0 || dayDate.getDay() === 6) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    dayElement.classList.add('available');
+                    dayElement.addEventListener('click', () => selectDate(dayDate, dayElement));
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function selectDate(date, element) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+                el.classList.add('available');
+            });
+            
+            // Select new date
+            element.classList.remove('available');
+            element.classList.add('selected');
+            
+            bookingData.date = date;
+            document.getElementById('next-to-time').disabled = false;
+            
+            // Update display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('selected-date-display').textContent = date.toLocaleDateString('en-US', options);
+        }
+
+        // Time slot generation
+        function generateTimeSlots() {
+            const timeSlotsContainer = document.getElementById('time-slots');
+            timeSlotsContainer.innerHTML = '';
+            
+            const timeSlots = [
+                '9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', 
+                '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+            ];
+            
+            timeSlots.forEach(time => {
+                const timeSlot = document.createElement('div');
+                timeSlot.className = 'time-slot';
+                timeSlot.textContent = time;
+                timeSlot.addEventListener('click', () => selectTime(time, timeSlot));
+                timeSlotsContainer.appendChild(timeSlot);
+            });
+        }
+
+        function selectTime(time, element) {
+            // Remove previous selection
+            document.querySelectorAll('.time-slot.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Select new time
+            element.classList.add('selected');
+            
+            bookingData.time = time;
+            document.getElementById('next-to-details').disabled = false;
+        }
+
+        // Form navigation
+        function initializeFormNavigation() {
+            // Step 1 to 2
+            document.getElementById('next-to-time').addEventListener('click', () => {
+                showStep(2);
+                generateTimeSlots();
+                updateProgress(2);
+            });
+            
+            // Step 2 to 1
+            document.getElementById('back-to-date').addEventListener('click', () => {
+                showStep(1);
+                updateProgress(1);
+            });
+            
+            // Step 2 to 3
+            document.getElementById('next-to-details').addEventListener('click', () => {
+                showStep(3);
+                updateProgress(3);
+            });
+            
+            // Step 3 to 2
+            document.getElementById('back-to-time').addEventListener('click', () => {
+                showStep(2);
+                updateProgress(2);
+            });
+            
+            // Step 3 to 4
+            document.getElementById('next-to-confirm').addEventListener('click', () => {
+                showStep(4);
+                updateProgress(4);
+                updateConfirmation();
+            });
+            
+            // Step 4 to 3
+            document.getElementById('back-to-details').addEventListener('click', () => {
+                showStep(3);
+                updateProgress(3);
+            });
+            
+            // Confirm booking
+            document.getElementById('confirm-booking').addEventListener('click', confirmBooking);
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            if (stepNumber === 'success') {
+                document.getElementById('form-step-success').classList.add('active');
+            } else {
+                document.getElementById(`form-step-${stepNumber}`).classList.add('active');
+            }
+        }
+
+        function updateProgress(step) {
+            document.querySelectorAll('.progress-step').forEach((stepEl, index) => {
+                const stepNum = index + 1;
+                stepEl.classList.remove('active', 'completed');
+                
+                if (stepNum < step) {
+                    stepEl.classList.add('completed');
+                } else if (stepNum === step) {
+                    stepEl.classList.add('active');
+                }
+            });
+        }
+
+        function updateConfirmation() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('confirm-date').textContent = bookingData.date.toLocaleDateString('en-US', options);
+            document.getElementById('confirm-time').textContent = bookingData.time;
+        }
+
+        // Form validation
+        function initializeFormValidation() {
+            const requiredFields = ['full-name', 'email', 'challenge'];
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.addEventListener('input', validateForm);
+                field.addEventListener('change', validateForm);
+            });
+        }
+
+        function validateForm() {
+            const requiredFields = ['full-name', 'email', 'challenge'];
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    isValid = false;
+                }
+            });
+            
+            document.getElementById('next-to-confirm').disabled = !isValid;
+            
+            // Update booking data
+            bookingData.fullName = document.getElementById('full-name').value;
+            bookingData.email = document.getElementById('email').value;
+            bookingData.phone = document.getElementById('phone').value;
+            bookingData.company = document.getElementById('company').value;
+            bookingData.challenge = document.getElementById('challenge').value;
+            bookingData.revenue = document.getElementById('revenue').value;
+            bookingData.context = document.getElementById('context').value;
+        }
+
+        // Booking confirmation
+        function confirmBooking() {
+            // Show loading state
+            const button = document.getElementById('confirm-booking');
+            const originalText = button.textContent;
+            button.textContent = 'Confirming...';
+            button.disabled = true;
+            
+            // Simulate booking process
+            setTimeout(() => {
+                // Update final display
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('final-datetime').textContent = 
+                    `${bookingData.date.toLocaleDateString('en-US', dateOptions)} at ${bookingData.time}`;
+                
+                // Show success step
+                showStep('success');
+                
+                // Reset button
+                button.textContent = originalText;
+                button.disabled = false;
+                
+                // Track conversion (placeholder)
+                if (window.AIFlow) {
+                    window.AIFlow.trackEvent('booking_confirmed', {
+                        date: bookingData.date,
+                        time: bookingData.time,
+                        challenge: bookingData.challenge
+                    });
+                }
+                
+                // Send confirmation email (placeholder)
+                sendConfirmationEmail();
+                
+            }, 2000);
+        }
+
+        function sendConfirmationEmail() {
+            // In a real implementation, this would send an actual email
+            console.log('Sending confirmation email to:', bookingData.email);
+            console.log('Booking details:', bookingData);
+        }
+
+        // Scroll Effects
+        function initializeScrollEffects() {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        }
+    </script>
+<!-- Firebase Auth setup -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js';
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+  } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "YOUR_KEY_HERE",
+    authDomain: "YOUR_DOMAIN_HERE",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET_HERE",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+</script>
+
+<!-- My main site logic -->
+<script src="main.js"></script>
+</body>
+</html>
