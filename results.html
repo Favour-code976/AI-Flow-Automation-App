@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results & Case Studies - AI Automation Success Stories</title>
+    <meta name="description" content="Real results from businesses using AI automation. See how companies saved 25+ hours monthly and increased leads by 300%.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #3182ce;
+            --accent: #38b2ac;
+            --neutral: #f7fafc;
+            --text: #2d3748;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral);
+            color: var(--text);
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(49, 130, 206, 0.3);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(247,250,252,0.9) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .case-study-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+        }
+        
+        .metric-highlight {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline-item {
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-gray-900">
+                        <span class="text-blue-600">AI</span>Flow
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="services.html" class="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+                    <a href="contact.html" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Book Discovery Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    <!-- NEW: Auth-related links -->
+  <a id="admin-link" href="admin.html"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Admin
+  </a>
+
+  <a id="login-link" href="login.html"
+     class="text-gray-700 hover:text-blue-600">
+    Login
+  </a>
+
+  <a id="logout-link" href="#"
+     class="text-gray-700 hover:text-blue-600 hidden">
+    Logout
+  </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-teal-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center reveal">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Real Results, <span class="text-blue-600">Real Impact</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    See how businesses like yours transformed their operations, saved hundreds of hours, 
+                    and scaled faster with AI automation and strategic connections.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold metric-highlight mb-2">25+</div>
+                        <p class="text-gray-600">Hours saved monthly per client</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold metric-highlight mb-2">300%</div>
+                        <p class="text-gray-600">Average lead generation increase</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold metric-highlight mb-2">50+</div>
+                        <p class="text-gray-600">Businesses transformed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="py-8 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="filter-btn active px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50" data-filter="all">
+                    All Results
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50" data-filter="consulting">
+                    Consulting
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50" data-filter="creative">
+                    Creative
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50" data-filter="saas">
+                    SaaS
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50" data-filter="ecommerce">
+                    E-commerce
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="case-studies-grid">
+                
+                <!-- Case Study 1: Marketing Agency -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="consulting">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Sarah Chen" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Sarah Chen</h3>
+                            <p class="text-gray-600">Founder, GrowthLab Marketing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">32</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">250%</div>
+                                <div class="text-sm text-gray-500">Lead Increase</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$8K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Manual lead qualification, scattered client onboarding, and inconsistent follow-up processes were limiting growth potential.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Implemented ChatGPT-powered lead scoring, automated onboarding sequences, and integrated CRM workflows.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 32 hours saved monthly on manual tasks</li>
+                            <li>• 250% increase in qualified leads</li>
+                            <li>• 85% faster client onboarding</li>
+                            <li>• $96K annual cost savings</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"The automation transformed how we operate. We're now handling 3x more clients with the same team size."</p>
+                    </div>
+                </div>
+
+                <!-- Case Study 2: Design Studio -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="creative">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Marcus Rodriguez" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Marcus Rodriguez</h3>
+                            <p class="text-gray-600">Creative Director, PixelPerfect Studio</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">28</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">180%</div>
+                                <div class="text-sm text-gray-500">Project Capacity</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$5.2K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Project management chaos, inconsistent client communication, and manual proposal creation were stifling creativity.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Automated project workflows, AI-powered proposal generation, and integrated client communication system.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 28 hours saved on project admin</li>
+                            <li>• 180% increase in project capacity</li>
+                            <li>• 95% client satisfaction improvement</li>
+                            <li>• $62K additional revenue</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"Finally, we can focus on creativity instead of admin work. The automation handles everything else."</p>
+                    </div>
+                </div>
+
+                <!-- Case Study 3: SaaS Startup -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="saas">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face" alt="Jennifer Park" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Jennifer Park</h3>
+                            <p class="text-gray-600">CEO, TechFlow SaaS</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">45</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">400%</div>
+                                <div class="text-sm text-gray-500">Lead Conversion</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$12K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Manual lead nurturing, inconsistent demo scheduling, and fragmented customer onboarding were limiting growth.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Comprehensive sales automation, AI-powered lead scoring, and automated customer success workflows.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 45 hours saved on sales processes</li>
+                            <li>• 400% improvement in lead conversion</li>
+                            <li>• 90% reduction in churn rate</li>
+                            <li>• $144K annual savings</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"The automation scaled our sales process exponentially. We're closing deals faster than ever."</p>
+                    </div>
+                </div>
+
+                <!-- Case Study 4: E-commerce Brand -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="ecommerce">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="Amanda Thompson" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Amanda Thompson</h3>
+                            <p class="text-gray-600">Founder, EcoStyle Store</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">38</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">320%</div>
+                                <div class="text-sm text-gray-500">Order Processing</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$6.8K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Manual order processing, inconsistent customer support, and inventory management were creating bottlenecks.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Automated order fulfillment, AI customer support chatbot, and integrated inventory management system.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 38 hours saved on order processing</li>
+                            <li>• 320% faster order fulfillment</li>
+                            <li>• 98% customer satisfaction</li>
+                            <li>• $81K annual cost reduction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"Automation transformed our operations. We can now handle peak seasons without stress."</p>
+                    </div>
+                </div>
+
+                <!-- Case Study 5: Coaching Business -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="consulting">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="David Kim" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">David Kim</h3>
+                            <p class="text-gray-600">Executive Coach, Leadership Mastery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">25</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">200%</div>
+                                <div class="text-sm text-gray-500">Client Capacity</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$4.5K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Manual scheduling, inconsistent follow-ups, and time-consuming session preparation were limiting client capacity.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Automated scheduling system, AI-powered session preparation, and integrated client management platform.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 25 hours saved on admin tasks</li>
+                            <li>• 200% increase in client capacity</li>
+                            <li>• 92% client retention rate</li>
+                            <li>• $54K additional annual revenue</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"Now I can focus entirely on coaching while automation handles all the logistics."</p>
+                    </div>
+                </div>
+
+                <!-- Case Study 6: Digital Agency -->
+                <div class="case-study-card bg-white rounded-2xl p-8 card-hover reveal" data-category="creative">
+                    <div class="flex items-center mb-6">
+                        <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Lisa Zhang" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Lisa Zhang</h3>
+                            <p class="text-gray-600">Managing Director, Digital Edge Agency</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 gap-4 mb-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">42</div>
+                                <div class="text-sm text-gray-500">Hours Saved</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">280%</div>
+                                <div class="text-sm text-gray-500">Project Delivery</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">$9.1K</div>
+                                <div class="text-sm text-gray-500">Monthly Savings</div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2">Challenge</h4>
+                        <p class="text-gray-600 text-sm mb-4">Complex project management, inconsistent client reporting, and manual resource allocation were causing delays.</p>
+                        
+                        <h4 class="font-semibold mb-2">Solution</h4>
+                        <p class="text-gray-600 text-sm mb-4">Comprehensive project automation, AI-powered resource optimization, and automated client reporting system.</p>
+                        
+                        <h4 class="font-semibold mb-2">Results</h4>
+                        <ul class="text-gray-600 text-sm space-y-1">
+                            <li>• 42 hours saved on project management</li>
+                            <li>• 280% faster project delivery</li>
+                            <li>• 97% client satisfaction rate</li>
+                            <li>• $109K increased profitability</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <p class="text-sm text-gray-500 italic">"The automation revolutionized our project delivery. We're exceeding client expectations consistently."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Carousel -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">What Clients Say</h2>
+                <p class="text-gray-600 text-lg">Hear directly from business owners who transformed their operations</p>
+            </div>
+            
+            <div class="splide" id="testimonials-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="testimonial-card rounded-2xl p-8 mx-4">
+                                <div class="flex items-center mb-6">
+                                    <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold">Michael Torres</h4>
+                                        <p class="text-gray-600">CEO, InnovateTech</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mb-4 italic">
+                                    "The automation setup was a game-changer for our startup. We went from manual chaos to streamlined operations in just two weeks. The ROI was immediate and substantial."
+                                </p>
+                                <div class="flex text-yellow-400">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="splide__slide">
+                            <div class="testimonial-card rounded-2xl p-8 mx-4">
+                                <div class="flex items-center mb-6">
+                                    <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold">Rachel Foster</h4>
+                                        <p class="text-gray-600">Founder, Creative Solutions</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mb-4 italic">
+                                    "I was skeptical about automation at first, but the results speak for themselves. We've doubled our client capacity while reducing our workload by 60%. It's been transformational."
+                                </p>
+                                <div class="flex text-yellow-400">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="splide__slide">
+                            <div class="testimonial-card rounded-2xl p-8 mx-4">
+                                <div class="flex items-center mb-6">
+                                    <img src="https://kimi-web-img.moonshot.cn/img/images.unsplash.com/photo-1519345182560-3f2917c472ef?w=80&h=80&fit=crop&crop=face" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                                    <div>
+                                        <h4 class="font-bold">James Wilson</h4>
+                                        <p class="text-gray-600">Partner, Growth Partners</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mb-4 italic">
+                                    "The business connections alone paid for the entire engagement. We met our perfect strategic partner within the first month. The automation was just a bonus!"
+                                </p>
+                                <div class="flex text-yellow-400">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before/After Timeline -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Transformation Timeline</h2>
+                <p class="text-gray-600 text-lg">Typical results timeline for automation implementation</p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="timeline-item pl-8 reveal">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-sm font-bold text-blue-600">1</span>
+                            </div>
+                            <h3 class="text-xl font-bold">Week 1: Discovery & Setup</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Initial automation audit and strategy development. First quick wins implemented.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-600 mb-2">Before</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Manual data entry (15+ hrs/week)</li>
+                                    <li>• Inconsistent follow-ups</li>
+                                    <li>• Scattered workflows</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-600 mb-2">After</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Automated data sync (1 hr/week)</li>
+                                    <li>• Consistent communication</li>
+                                    <li>• Centralized processes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item pl-8 reveal">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-sm font-bold text-teal-600">2</span>
+                            </div>
+                            <h3 class="text-xl font-bold">Month 1: Core Automation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Key workflows automated and integrated. Measurable time savings begin.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-600 mb-2">Before</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 40+ hours manual work/week</li>
+                                    <li>• Missed opportunities</li>
+                                    <li>• Inconsistent results</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-600 mb-2">After</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 15 hours automated/week</li>
+                                    <li>• 100% follow-up coverage</li>
+                                    <li>• Predictable outcomes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item pl-8 reveal">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-sm font-bold text-purple-600">3</span>
+                            </div>
+                            <h3 class="text-xl font-bold">Month 3: Optimization</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Advanced features implemented and processes refined. Full ROI realization.</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-600 mb-2">Before</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Limited growth capacity</li>
+                                    <li>• Reactive problem-solving</li>
+                                    <li>• Scaling challenges</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-600 mb-2">After</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 3x growth capacity</li>
+                                    <li>• Proactive insights</li>
+                                    <li>• Scalable operations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-br from-blue-600 to-teal-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="reveal">
+                <h2 class="text-3xl font-bold mb-4">Ready to Join These Success Stories?</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Book a free discovery call to discuss your specific challenges and get a custom automation roadmap
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+                        Book Your Discovery Call
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="services.html" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center">
+                        View Service Packages
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4">
+                    <span class="text-blue-400">AI</span>Flow
+                </div>
+                <p class="text-gray-400 mb-6">Work Smarter. Scale Faster. Automate What Slows You Down.</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="index.html" class="text-gray-400 hover:text-white">Home</a>
+                    <a href="services.html" class="text-gray-400 hover:text-white">Services</a>
+                    <a href="contact.html" class="text-gray-400 hover:text-white">Contact</a>
+                </div>
+                <p class="text-gray-500 text-sm">© 2024 AIFlow Automation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeFilter();
+            initializeTestimonialCarousel();
+            initializeScrollEffects();
+        });
+
+        // Filter Functionality
+        function initializeFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const caseStudies = document.querySelectorAll('.case-study-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.dataset.filter;
+
+                    // Filter case studies
+                    caseStudies.forEach(study => {
+                        if (filter === 'all' || study.dataset.category === filter) {
+                            study.style.display = 'block';
+                            anime({
+                                targets: study,
+                                opacity: [0, 1],
+                                translateY: [20, 0],
+                                duration: 500,
+                                easing: 'easeOutQuart'
+                            });
+                        } else {
+                            anime({
+                                targets: study,
+                                opacity: [1, 0],
+                                translateY: [0, -20],
+                                duration: 300,
+                                easing: 'easeInQuart',
+                                complete: () => {
+                                    study.style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        // Testimonial Carousel
+        function initializeTestimonialCarousel() {
+            if (document.getElementById('testimonials-carousel')) {
+                new Splide('#testimonials-carousel', {
+                    type: 'loop',
+                    perPage: 1,
+                    perMove: 1,
+                    gap: '2rem',
+                    autoplay: true,
+                    interval: 5000,
+                    pauseOnHover: true,
+                    breakpoints: {
+                        768: {
+                            perPage: 1,
+                        }
+                    }
+                }).mount();
+            }
+        }
+
+        // Scroll Effects
+        function initializeScrollEffects() {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        }
+    </script>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js';
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut 
+  } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "YOUR_KEY_HERE",
+    authDomain: "YOUR_DOMAIN_HERE",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET_HERE",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+</script>
+
+<!-- My main site logic -->
+<script src="main.js"></script>
+</body>
+</html>
