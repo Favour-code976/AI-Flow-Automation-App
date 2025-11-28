@@ -1,13 +1,6 @@
 // Main JavaScript for AI Automation Landing Page
 
-diff --git a/main.js b/main.js
-index aa450833678ad7e8cb3c0a15c9ef491f7cc1edd6..90bf8159eb31f228dd9ea1e776994d0119f5295e 100644
---- a/main.js
-+++ b/main.js
-@@ -1,28 +1,28 @@
- // Main JavaScript for AI Automation Landing Page
- 
-+const ADMIN_EMAIL = "no@.com"; // admin email used for demo credentials
+const ADMIN_EMAIL = "no@.com"; // admin email used for demo credentials
  
  
  // Initialize when DOM is loaded
@@ -34,32 +27,6 @@ index aa450833678ad7e8cb3c0a15c9ef491f7cc1edd6..90bf8159eb31f228dd9ea1e776994d01
  
      setupLoginFormHandler();
 
-
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Page features
-    initializeAnimations();
-    initializeROICalculator();
-    initializeAssessmentQuiz();
-    initializeScrollEffects();
-    initializeMobileMenu();
-    initializeCounters();
-
-    // ---------- AUTH STATE (Firebase) ----------
-    const firebase = window.FirebaseAuth;
-    if (!firebase) return; // safety if Firebase didn't load
-
-    const { auth, onAuthStateChanged } = firebase;
-
-    // React when user logs in / logs out
-    onAuthStateChanged(auth, (user) => {
-        updateNavForAuth(user);
-        protectAdminPage(user);
-    });
-
-    setupLoginFormHandler();
-    setupLogoutHandler();
 });
 
 
@@ -98,11 +65,16 @@ function setupLoginFormHandler() {
   const form = document.getElementById("login-form");
   if (!form) return; // we're not on login page
 
-  form.addEventListener("submit", async function (e) {
+   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const error = document.getElementById("login-error");
+
+    if (error) {
+      error.classList.add("hidden");
+      error.setAttribute("hidden", "");
+    }
 
     const firebase = window.FirebaseAuth;
     if (!firebase) return;
@@ -113,7 +85,10 @@ function setupLoginFormHandler() {
       window.location.href = "admin.html";
     } catch (err) {
       console.error(err);
-      if (error) error.classList.remove("hidden");
+      if (error) {
+        error.classList.remove("hidden");
+        error.removeAttribute("hidden");
+      }
     }
   });
 }
@@ -689,5 +664,6 @@ window.AIFlow = {
     animateCounter,
     createParticleBackground
 };
+
 
 
