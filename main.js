@@ -2,7 +2,6 @@
 
 const ADMIN_EMAIL = "no@.com"; // admin email used for demo credentials
  
- 
  // Initialize when DOM is loaded
  document.addEventListener('DOMContentLoaded', function() {
      // Page features
@@ -36,11 +35,10 @@ function updateNavForAuth(user) {
   const loginLink  = document.getElementById("login-link");
   const logoutLink = document.getElementById("logout-link");
 
-  const isAdmin = user && user.email === ADMIN_EMAIL;
   const isLoggedIn = !!user;
 
   if (adminLink) {
-    adminLink.classList.toggle("hidden", !isAdmin);
+    adminLink.classList.toggle("hidden", !isLoggedIn);
   }
   if (loginLink) {
     loginLink.classList.toggle("hidden", isLoggedIn);
@@ -53,9 +51,8 @@ function updateNavForAuth(user) {
 // Redirect non-admins away from admin.html
 function protectAdminPage(user) {
   const onAdminPage = window.location.pathname.endsWith("admin.html");
-  const isAdmin = user && user.email === ADMIN_EMAIL;
 
-  if (onAdminPage && !isAdmin) {
+  if (onAdminPage && !user) {
     window.location.href = "login.html";
   }
 }
@@ -65,7 +62,7 @@ function setupLoginFormHandler() {
   const form = document.getElementById("login-form");
   if (!form) return; // we're not on login page
 
-   form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
@@ -110,11 +107,10 @@ function setupLogoutHandler() {
   });
 }
 
-
 // Animation Initialization
 function initializeAnimations() {
-    // Typed.js for hero headline
-    if (document.getElementById('typed-headline')) {
+    // Typed.js for hero headline (skip if library or target missing)
+    if (typeof Typed !== 'undefined' && document.getElementById('typed-headline')) {
         new Typed('#typed-headline', {
             strings: [
                 'Work Smarter.',
@@ -129,23 +125,26 @@ function initializeAnimations() {
             showCursor: true,
             cursorChar: '|',
             onComplete: function() {
-                document.querySelector('.typed-cursor').style.display = 'none';
+                const cursor = document.querySelector('.typed-cursor');
+                if (cursor) cursor.style.display = 'none';
             }
         });
     }
 
     // Particle background effect
     createParticleBackground();
-    
-    // Animate elements on page load
-    anime({
-        targets: '.floating',
-        translateY: [-20, 0],
-        opacity: [0, 1],
-        duration: 1000,
-        delay: anime.stagger(200),
-        easing: 'easeOutQuart'
-    });
+
+    // Animate elements on page load (only when anime.js is present)
+    if (typeof anime !== 'undefined') {
+        anime({
+            targets: '.floating',
+            translateY: [-20, 0],
+            opacity: [0, 1],
+            duration: 1000,
+            delay: anime.stagger(200),
+            easing: 'easeOutQuart'
+        });
+    }
 }
 
 // Particle Background Effect
@@ -664,6 +663,7 @@ window.AIFlow = {
     animateCounter,
     createParticleBackground
 };
+
 
 
 
