@@ -9,6 +9,7 @@
 |-- login.html              #NEW
 |-- admin.html.             #NEW
 ├── main.js                 # Core JavaScript functionality
+|-- firebase-init.js        # firebase script
 ├── resources/              # Media assets
 │   ├── hero-automation.png # Generated hero image
 │   ├── dashboard-1.png     # Workflow automation image
@@ -182,3 +183,4 @@ Analytics events (you already have trackEvent in main.js!)
 Hosting (your SmartWeb Linux hosting)
 Domain (urus.store or favconnected.com etc.)
 HTTPS via SSL
+
