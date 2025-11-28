@@ -2,65 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Flow - Login</title>
-  <link rel="stylesheet" href="styles.css" /> <!-- or your CSS/Tailwind file -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #2c4465;
+      --secondary: #203d58;
+      --accent: #38726f;
+      --neutral: #e5edf4;
+      --text: #1f2937;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(56, 178, 172, 0.08), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(44, 68, 101, 0.1), transparent 25%),
+                  var(--neutral);
+      color: var(--text);
+    }
+    .card-surface {
+      background: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(237,242,247,0.95) 100%);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+      backdrop-filter: blur(10px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(32, 61, 88, 0.35);
+    }
+  </style>
 </head>
-<body class="bg-gray-50">
-  <!-- you can reuse your nav here if you like -->
+<body>
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="text-xl font-bold text-gray-900">
+          <span class="text-blue-600">AI</span>Flow
+        </div>
+        <div class="flex items-center space-x-6 text-sm font-medium">
+          <a href="index.html" class="text-gray-700 hover:text-blue-600">Home</a>
+          <a href="services.html" class="text-gray-700 hover:text-blue-600">Services</a>
+          <a href="results.html" class="text-gray-700 hover:text-blue-600">Results</a>
+          <a href="contact.html" class="text-gray-700 hover:text-blue-600">Contact</a>
+          <a id="admin-link" href="admin.html" class="text-gray-700 hover:text-blue-600 hidden">Admin</a>
+          <a id="login-link" href="login.html" class="text-gray-700 hover:text-blue-600">Login</a>
+          <a id="logout-link" href="#" class="text-gray-700 hover:text-blue-600 hidden">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md space-y-6">
-      <h1 class="text-2xl font-bold text-gray-900 text-center">
-        Sign in to AI Flow
-      </h1>
+  <main class="min-h-screen flex items-center justify-center pt-20 pb-10 px-4">
+    <div class="card-surface rounded-2xl p-8 w-full max-w-lg border border-white/50 space-y-8">
+      <div class="text-center space-y-2">
+        <p class="text-xs uppercase tracking-[0.3em] text-blue-600">Secure Access</p>
+        <h1 class="text-3xl font-bold text-gray-900">Sign in to AI Flow</h1>
+        <p class="text-sm text-gray-600">Use your credentials to reach the admin dashboard.</p>
+      </div>
 
       <form id="login-form" class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700" for="email">
-            Email
-          </label>
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700" for="email">Email</label>
           <input
             id="email"
             type="email"
             required
-            class="mt-1 block w-full border rounded-md px-3 py-2 text-sm"
+            class="mt-1 block w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="you@example.com"
           />
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700" for="password">
-            Password
-          </label>
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700" for="password">Password</label>
           <input
             id="password"
             type="password"
             required
-            class="mt-1 block w-full border rounded-md px-3 py-2 text-sm"
+            class="mt-1 block w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="••••••••"
           />
         </div>
 
- <p id="login-error" class="text-sm text-red-500 hidden" hidden>
-          Invalid email or password.␊
-        </p>␊
+        <p id="login-error" class="text-sm text-red-500 hidden" hidden>
+          Invalid email or password.
+        </p>
 
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white font-medium py-2 rounded-md"
+          class="w-full btn-primary text-white font-semibold py-3 rounded-lg text-sm"
         >
           Log in
         </button>
       </form>
 
-      <p class="text-xs text-gray-500 text-center">
-        DEMO Login Access:<br />
-        <strong>admin (no@.com)</strong> / <strong>@Admin</strong>
-      </p>
+      <div class="text-center text-xs text-gray-500">
+        <p class="font-semibold text-gray-700">DEMO Login Access:</p>
+        <p><strong>admin (no@.com)</strong> / <strong>@Admin</strong></p>
+      </div>
     </div>
-  </div>
-<!-- Firebase Auth setup -->
-<script type="module" src="firebase-init.js"></script>
+  </main>
 
-<!-- my main JS file -->
-<script src="main.js"></script>
+  <script type="module" src="firebase-init.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
