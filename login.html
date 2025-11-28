@@ -39,9 +39,9 @@
           />
         </div>
 
-        <p id="login-error" class="text-sm text-red-500 hidden">
-          Invalid email or password.
-        </p>
+ <p id="login-error" class="text-sm text-red-500 hidden" hidden>
+          Invalid email or password.␊
+        </p>␊
 
         <button
           type="submit"
@@ -58,111 +58,9 @@
     </div>
   </div>
 <!-- Firebase Auth setup -->
-diff --git a/login.html b/login.html
-index eb590071a10af5b99ded38bb9067e2a2459b5f33..61ea06c9470118b6f1b0af16bb00a5ef6f7fea92 100644
---- a/login.html
-+++ b/login.html
-@@ -35,59 +35,68 @@
-             id="password"
-             type="password"
-             required
-             class="mt-1 block w-full border rounded-md px-3 py-2 text-sm"
-           />
-         </div>
- 
-         <p id="login-error" class="text-sm text-red-500 hidden">
-           Invalid email or password.
-         </p>
- 
-         <button
-           type="submit"
-           class="w-full bg-blue-600 text-white font-medium py-2 rounded-md"
-         >
-           Log in
-         </button>
-       </form>
- 
-       <p class="text-xs text-gray-500 text-center">
-         DEMO Login Access:<br />
-         <strong>admin (no@.com)</strong> / <strong>@Admin</strong>
-       </p>
-     </div>
-   </div>
--<!-- Firebase Auth setup -->
--<script type="module">
--  // Import the functions you need from the SDKs you need
--import { initializeApp } from "firebase/app";
--import { getAnalytics } from "firebase/analytics";
--// TODO: Add SDKs for Firebase products that you want to use
--// https://firebase.google.com/docs/web/setup#available-libraries
--
--// Your web app's Firebase configuration
--// For Firebase JS SDK v7.20.0 and later, measurementId is optional
--const firebaseConfig = {
--  apiKey: "AIzaSyBr4_qrqCMt9xMAVqwj61RvXr863zp0SOU",
--  authDomain: "ai--flow.firebaseapp.com",
--  projectId: "ai--flow",
--  storageBucket: "ai--flow.firebasestorage.app",
--  messagingSenderId: "1062635304714",
--  appId: "1:1062635304714:web:f353728b976482a7e1ecf3",
--  measurementId: "G-451XSKKQVF"
--};
--
--// Initialize Firebase
--const app = initializeApp(firebaseConfig);
--const analytics = getAnalytics(app);// Make it available to main.js
--  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
--</script>
-+<!-- Firebase Auth setup -->
-+<script type="module">
-+  // Import the functions you need from the SDKs you need
-+  import { initializeApp } from "firebase/app";
-+  import { getAnalytics } from "firebase/analytics";
-+  // TODO: Add SDKs for Firebase products that you want to use
-+  // https://firebase.google.com/docs/web/setup#available-libraries
-+
-+  import {
-+    getAuth,
-+    onAuthStateChanged,
-+    signInWithEmailAndPassword,
-+    signOut,
-+  } from "firebase/auth";
-+
-+  // Your web app's Firebase configuration
-+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-+  const firebaseConfig = {
-+    apiKey: "AIzaSyBr4_qrqCMt9xMAVqwj61RvXr863zp0SOU",
-+    authDomain: "ai--flow.firebaseapp.com",
-+    projectId: "ai--flow",
-+    storageBucket: "ai--flow.firebasestorage.app",
-+    messagingSenderId: "1062635304714",
-+    appId: "1:1062635304714:web:f353728b976482a7e1ecf3",
-+    measurementId: "G-451XSKKQVF",
-+  };
-+
-+  // Initialize Firebase
-+  const app = initializeApp(firebaseConfig);
-+  const analytics = getAnalytics(app);
-+
-+  const auth = getAuth(app);
-+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
-+</script>
- 
- <!-- my main JS file -->
- <script src="main.js"></script>
- </body>
- </html>
- 
- 
- 
- 
+<script type="module" src="firebase-init.js"></script>
 
 <!-- my main JS file -->
 <script src="main.js"></script>
 </body>
 </html>
-
-
-
-
-
