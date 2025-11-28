@@ -1,6 +1,39 @@
 // Main JavaScript for AI Automation Landing Page
 
-const ADMIN_EMAIL = "favylily7@gmail"; // your admin email
+diff --git a/main.js b/main.js
+index aa450833678ad7e8cb3c0a15c9ef491f7cc1edd6..90bf8159eb31f228dd9ea1e776994d0119f5295e 100644
+--- a/main.js
++++ b/main.js
+@@ -1,28 +1,28 @@
+ // Main JavaScript for AI Automation Landing Page
+ 
++const ADMIN_EMAIL = "no@.com"; // admin email used for demo credentials
+ 
+ 
+ // Initialize when DOM is loaded
+ document.addEventListener('DOMContentLoaded', function() {
+     // Page features
+     initializeAnimations();
+     initializeROICalculator();
+     initializeAssessmentQuiz();
+     initializeScrollEffects();
+     initializeMobileMenu();
+     initializeCounters();
+ 
+     // ---------- AUTH STATE (Firebase) ----------
+     const firebase = window.FirebaseAuth;
+     if (!firebase) return; // safety if Firebase didn't load
+ 
+     const { auth, onAuthStateChanged } = firebase;
+ 
+     // React when user logs in / logs out
+     onAuthStateChanged(auth, (user) => {
+         updateNavForAuth(user);
+         protectAdminPage(user);
+     });
+ 
+     setupLoginFormHandler();
+
 
 
 // Initialize when DOM is loaded
@@ -656,4 +689,5 @@ window.AIFlow = {
     animateCounter,
     createParticleBackground
 };
+
 
