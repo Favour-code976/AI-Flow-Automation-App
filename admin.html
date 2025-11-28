@@ -796,49 +796,98 @@ index aa6faf69c16709602fd495ce3041c2d4970326af..65875a50073a9233bf435a2537270668
          });
      </script>
  <!-- your existing big <script> ...dashboard logic... </script> is here -->
+diff --git a/admin.html b/admin.html
+index aa6faf69c16709602fd495ce3041c2d4970326af..e8b351f7cb219f0e49f2a8f79b193bdba8f4f63f 100644
+--- a/admin.html
++++ b/admin.html
+@@ -720,55 +720,32 @@ AI Flow Team`
+         document.querySelectorAll('.sidebar-nav a').forEach(link => {
+             link.addEventListener('click', function(e) {
+                 e.preventDefault();
+                 
+                 // Remove active class from all links
+                 document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+                 
+                 // Add active class to clicked link
+                 this.classList.add('active');
+                 
+                 // Update header title
+                 const section = this.getAttribute('href').substring(1);
+                 document.querySelector('header h1').textContent = section.charAt(0).toUpperCase() + section.slice(1);
+             });
+         });
  
+         // Close modal when clicking outside
+         document.getElementById('booking-modal').addEventListener('click', function(e) {
+             if (e.target === this) {
+                 closeModal();
+             }
+         });
+  diff --git a/admin.html b/admin.html
+index aa6faf69c16709602fd495ce3041c2d4970326af..e8b351f7cb219f0e49f2a8f79b193bdba8f4f63f 100644
+--- a/admin.html
++++ b/admin.html
+@@ -720,55 +720,32 @@ AI Flow Team`
+         document.querySelectorAll('.sidebar-nav a').forEach(link => {
+             link.addEventListener('click', function(e) {
+                 e.preventDefault();
+                 
+                 // Remove active class from all links
+                 document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+                 
+                 // Add active class to clicked link
+                 this.classList.add('active');
+                 
+                 // Update header title
+                 const section = this.getAttribute('href').substring(1);
+                 document.querySelector('header h1').textContent = section.charAt(0).toUpperCase() + section.slice(1);
+             });
+         });
+ 
+         // Close modal when clicking outside
+         document.getElementById('booking-modal').addEventListener('click', function(e) {
+             if (e.target === this) {
+                 closeModal();
+             }
+         });
+     </script>
+ <!-- your existing big <script> ...dashboard logic... </script> is here -->
+ 
+-    <!-- Firebase Auth + main.js (same as other pages) -->
+-    <script type="module">
+-    // Import the functions you need from the SDKs you need
+-import { initializeApp } from "firebase/app";
+-import { getAnalytics } from "firebase/analytics";
+-// TODO: Add SDKs for Firebase products that you want to use
+-// https://firebase.google.com/docs/web/setup#available-libraries
+-
+-// Your web app's Firebase configuration
+-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+-const firebaseConfig = {
+-  apiKey: "AIzaSyBr4_qrqCMt9xMAVqwj61RvXr863zp0SOU",
+-  authDomain: "ai--flow.firebaseapp.com",
+-  projectId: "ai--flow",
+-  storageBucket: "ai--flow.firebasestorage.app",
+-  messagingSenderId: "1062635304714",
+-  appId: "1:1062635304714:web:f353728b976482a7e1ecf3",
+-  measurementId: "G-451XSKKQVF"
+-};
+-
+-// Initialize Firebase
+-const app = initializeApp(firebaseConfig);
+-const analytics = getAnalytics(app);// Make it available to main.js
+-  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
+-</script>
+-
+-    <script src="main.js"></script>
 +    <!-- Firebase Auth + main.js (same as other pages) -->
-+    <script type="module">
-+  // Import the functions you need from the SDKs you need
-+  import { initializeApp } from "firebase/app";
-+  import { getAnalytics } from "firebase/analytics";
-+  // TODO: Add SDKs for Firebase products that you want to use
-+  // https://firebase.google.com/docs/web/setup#available-libraries
++    <script type="module" src="firebase-init.js"></script>
 +
-+  import {
-+    getAuth,
-+    onAuthStateChanged,
-+    signInWithEmailAndPassword,
-+    signOut,
-+  } from "firebase/auth";
-+
-+  // Your web app's Firebase configuration
-+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-+  const firebaseConfig = {
-+    apiKey: "AIzaSyBr4_qrqCMt9xMAVqwj61RvXr863zp0SOU",
-+    authDomain: "ai--flow.firebaseapp.com",
-+    projectId: "ai--flow",
-+    storageBucket: "ai--flow.firebasestorage.app",
-+    messagingSenderId: "1062635304714",
-+    appId: "1:1062635304714:web:f353728b976482a7e1ecf3",
-+    measurementId: "G-451XSKKQVF",
-+  };
-+
-+  // Initialize Firebase
-+  const app = initializeApp(firebaseConfig);
-+  const analytics = getAnalytics(app);
-+
-+  const auth = getAuth(app);
-+  window.FirebaseAuth = { auth, onAuthStateChanged, signInWithEmailAndPassword, signOut };
-+</script>
- 
-     <script src="main.js"></script>
++    <script src="main.js"></script>
  </body>
  </html>
  
 
-    <script src="main.js"></script>
-</body>
-</html>
+
 
 
